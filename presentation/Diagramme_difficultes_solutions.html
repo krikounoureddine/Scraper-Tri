@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Difficultés Rencontrées et Solutions Apportées</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #2c3e50, #34495e, #4a6572);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 15px;
+        }
+        
+        .chart-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .mermaid-outer-wrapper {
+            width: 100%;
+            height: 700px;
+            overflow: auto;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .mermaid-inner-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-width: min-content;
+            min-height: min-content;
+            padding: 40px;
+            transform-origin: center center;
+            transition: transform 0.3s ease;
+        }
+        
+        .mermaid {
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .mermaid svg {
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .control-btn:active {
+            transform: translateY(0);
+        }
+        
+        .control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .zoom-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .zoom-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+        
+        .zoom-level {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .zoom-percentage {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #3498db;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .zoom-slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: 25px;
+            margin-top: 10px;
+        }
+        
+        .zoom-slider {
+            width: 300px;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .zoom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3498db;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+        
+        .zoom-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3498db;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+        
+        .zoom-presets {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .preset-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .preset-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .status-message {
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .scroll-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            z-index: 10;
+        }
+        
+        .details-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        
+        .details-section h3 {
+            margin-bottom: 20px;
+            color: #3498db;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .challenge-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #e74c3c;
+            transition: transform 0.3s ease;
+        }
+        
+        .challenge-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .challenge-card.solution {
+            border-left-color: #2ecc71;
+        }
+        
+        .challenge-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #e74c3c;
+        }
+        
+        .solution-title {
+            color: #2ecc71;
+        }
+        
+        .challenge-description {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .tech-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .tech-badge {
+            background: rgba(52, 152, 219, 0.3);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(52, 152, 219, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .chart-container {
+                padding: 15px;
+            }
+            
+            .mermaid-outer-wrapper {
+                height: 500px;
+            }
+            
+            .mermaid-inner-wrapper {
+                padding: 20px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-btn {
+                width: 200px;
+            }
+            
+            .zoom-slider {
+                width: 200px;
+            }
+            
+            .zoom-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .challenge-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>II.2.5 Difficultés Rencontrées et Solutions Apportées</h1>
+            <p class="subtitle">Analyse des défis techniques et des stratégies de résolution mises en œuvre</p>
+            
+            <div class="zoom-controls">
+                <div class="controls">
+                    <button class="control-btn" onclick="zoomIn()" id="zoomInBtn">Zoom +</button>
+                    <button class="control-btn" onclick="zoomOut()" id="zoomOutBtn">Zoom -</button>
+                    <button class="control-btn" onclick="resetZoom()">100%</button>
+                    <button class="control-btn" onclick="zoomToMax()">1000%</button>
+                    <button class="control-btn" onclick="downloadDiagram()">Télécharger</button>
+                    <button class="control-btn" onclick="centerDiagram()">Centrer</button>
+                </div>
+                
+                <div class="zoom-info">
+                    <div class="zoom-level">Niveau de zoom:</div>
+                    <div class="zoom-percentage" id="zoomPercentage">100%</div>
+                </div>
+                
+                <div class="zoom-slider-container">
+                    <span>50%</span>
+                    <input type="range" min="50" max="1000" value="100" class="zoom-slider" id="zoomSlider" oninput="updateZoomFromSlider(this.value)">
+                    <span>1000%</span>
+                </div>
+                
+                <div class="zoom-presets">
+                    <button class="preset-btn" onclick="setZoom(0.5)">50%</button>
+                    <button class="preset-btn" onclick="setZoom(1)">100%</button>
+                    <button class="preset-btn" onclick="setZoom(2)">200%</button>
+                    <button class="preset-btn" onclick="setZoom(5)">500%</button>
+                    <button class="preset-btn" onclick="setZoom(10)">1000%</button>
+                </div>
+                
+                <div class="status-message" id="statusMessage"></div>
+            </div>
+        </header>
+        
+        <div class="chart-container">
+            <div class="mermaid-outer-wrapper" id="mermaidOuterWrapper">
+                <div class="mermaid-inner-wrapper" id="mermaidInnerWrapper">
+                    <div class="mermaid" id="mermaid-diagram"></div>
+                </div>
+                <div class="scroll-hint" id="scrollHint">Utilisez le défilement pour naviguer</div>
+            </div>
+        </div>
+        
+        <div class="details-section">
+            <h3>Détails des Défis et Solutions</h3>
+            <div class="challenge-grid">
+                <div class="challenge-card">
+                    <div class="challenge-title">🚧 Défi #1: Complexité du formulaire ASP.NET</div>
+                    <div class="challenge-description">
+                        La gestion des champs cachés et de la validation côté serveur a été un défi majeur. Le formulaire utilisait des mécanismes complexes de validation ASP.NET qui rendaient difficile l'automatisation.
+                    </div>
+                    <div class="challenge-card solution">
+                        <div class="challenge-title solution-title">✅ Solution: Automatisation réaliste avec Selenium</div>
+                        <div class="challenge-description">
+                            Utilisation de Selenium pour reproduire fidèlement le comportement d'un navigateur humain, en s'assurant de soumettre tous les paramètres requis et de gérer les validations côté client et serveur.
+                        </div>
+                        <div class="tech-badges">
+                            <span class="tech-badge">Selenium</span>
+                            <span class="tech-badge">WebDriver</span>
+                            <span class="tech-badge">Automation</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="challenge-card">
+                    <div class="challenge-title">🚧 Défi #2: Erreurs HTTP 500 lors du scraping intensif</div>
+                    <div class="challenge-description">
+                        Le serveur de la FFB bloquait les requêtes automatisées intensives, générant des erreurs HTTP 500 et interrompant le processus de collecte de données.
+                    </div>
+                    <div class="challenge-card solution">
+                        <div class="challenge-title solution-title">✅ Solution: En-têtes réalistes et temporisations</div>
+                        <div class="challenge-description">
+                            Implémentation d'en-têtes HTTP réalistes (User-Agent) et de temporisations stratégiques entre les requêtes pour simuler un comportement humain et contourner les limitations du serveur.
+                        </div>
+                        <div class="tech-badges">
+                            <span class="tech-badge">HTTP Headers</span>
+                            <span class="tech-badge">Rate Limiting</span>
+                            <span class="tech-badge">User-Agent</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="challenge-card">
+                    <div class="challenge-title">🚧 Défi #3: Hétérogénéité des données XML</div>
+                    <div class="challenge-description">
+                        La structure des fichiers XML renvoyés pouvait varier considérablement, avec des données manquantes ou des formats incohérents, rendant le parsing difficile et peu fiable.
+                    </div>
+                    <div class="challenge-card solution">
+                        <div class="challenge-title solution-title">✅ Solution: Parsing robuste avec contrôles de nullité</div>
+                        <div class="challenge-description">
+                            Renforcement du code de parsing avec des contrôles de nullité systématiques et des traitements conditionnels pour garantir la robustesse face à des données incomplètes ou inattendues.
+                        </div>
+                        <div class="tech-badges">
+                            <span class="tech-badge">XML Parsing</span>
+                            <span class="tech-badge">Null Checks</span>
+                            <span class="tech-badge">Error Handling</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="challenge-card">
+                    <div class="challenge-title">🚧 Défi #4: Gestion des 37 types de déchets</div>
+                    <div class="challenge-description">
+                        La complexité de la classification (11 groupes, 37 types) avec ses trois catégories principales (DD, DNDI, DNDNI) nécessitait une modélisation rigoureuse et une interface utilisateur intuitive.
+                    </div>
+                    <div class="challenge-card solution">
+                        <div class="challenge-title solution-title">✅ Solution: Modélisation DB et interface optimisée</div>
+                        <div class="challenge-description">
+                            Conception d'une base de données relationnelle robuste et développement d'une interface de sélection hiérarchique garantissant une expérience utilisateur fluide et sans erreur.
+                        </div>
+                        <div class="tech-badges">
+                            <span class="tech-badge">SQLite</span>
+                            <span class="tech-badge">Database Design</span>
+                            <span class="tech-badge">UI/UX</span>
+                            <span class="tech-badge">Tkinter</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables pour le contrôle du zoom
+        let currentScale = 1;
+        const minScale = 0.5;   // 50%
+        const maxScale = 10;    // 1000%
+        const scaleStep = 0.1;  // 10%
+        
+        // Configuration Mermaid
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark',
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            securityLevel: 'loose'
+        });
+        
+        // Définition du diagramme
+        const diagramDefinition = `
+flowchart TD
+    A[🏗️ Difficultés Rencontrées<br/>et Solutions Apportées]
+    
+    A --> B[🚧 Défi #1<br/>Complexité formulaire ASP.NET]
+    A --> C[🚧 Défi #2<br/>Erreurs HTTP 500]
+    A --> D[🚧 Défi #3<br/>Hétérogénéité données XML]
+    A --> E[🚧 Défi #4<br/>Gestion 37 types déchets]
+    
+    B --> B1[✅ Solution:<br/>Selenium réaliste]
+    C --> C1[✅ Solution:<br/>En-têtes & temporisations]
+    D --> D1[✅ Solution:<br/>Parsing robuste]
+    E --> E1[✅ Solution:<br/>Modélisation DB]
+    
+    B1 --> B1a[📋 Reproduire comportement<br/>navigateur humain]
+    B1 --> B1b[🔍 Soumettre tous les<br/>paramètres requis]
+    B1 --> B1c[⚡ Gérer validation<br/>côté serveur]
+    
+    C1 --> C1a[🌐 En-têtes HTTP réalistes<br/>User-Agent authentique]
+    C1 --> C1b[⏱️ Temporisations stratégiques<br/>entre requêtes]
+    C1 --> C1c[🛡️ Contourner limitations<br/>serveur FFB]
+    
+    D1 --> D1a[🔍 Contrôles de nullité<br/>systématiques]
+    D1 --> D1b[🔄 Traitements conditionnels<br/>pour données incomplètes]
+    D1 --> D1c[💪 Robustesse face aux<br/>variations structurelles]
+    
+    E1 --> E1a[🗃️ Base de données<br/>relationnelle robuste]
+    E1 --> E1b[🎯 Interface de sélection<br/>hiérarchique]
+    E1 --> E1c[✨ Expérience utilisateur<br/>fluide et intuitive]
+    
+    %% Styles pour les défis
+    classDef challenge fill:#e74c3c,color:#ffffff,stroke:#c0392b,stroke-width:2px
+    classDef solution fill:#2ecc71,color:#ffffff,stroke:#27ae60,stroke-width:2px
+    classDef detail fill:#3498db,color:#ffffff,stroke:#2980b9,stroke-width:1px
+    classDef title fill:#2c3e50,color:#ffffff,stroke:#34495e,stroke-width:3px
+    
+    %% Application des styles
+    class A title
+    class B,C,D,E challenge
+    class B1,C1,D1,E1 solution
+    class B1a,B1b,B1c,C1a,C1b,C1c,D1a,D1b,D1c,E1a,E1b,E1c detail
+`;
+
+        // Fonction pour rendre le diagramme
+        async function renderDiagram() {
+            const container = document.getElementById('mermaid-diagram');
+            
+            try {
+                const mermaidDiv = document.createElement('div');
+                mermaidDiv.className = 'mermaid';
+                mermaidDiv.textContent = diagramDefinition;
+                
+                container.innerHTML = '';
+                container.appendChild(mermaidDiv);
+                
+                await mermaid.init(undefined, mermaidDiv);
+                
+                console.log('Diagramme Mermaid rendu avec succès');
+                showStatus('Diagramme des défis et solutions chargé avec succès!', 'success');
+                
+                // Centrer le diagramme après le chargement
+                setTimeout(centerDiagram, 100);
+                
+            } catch (error) {
+                console.error('Erreur lors du rendu Mermaid:', error);
+                container.innerHTML = '<div class="status-message">Erreur lors du chargement du diagramme</div>';
+                showStatus('Erreur lors du chargement du diagramme', 'error');
+            }
+        }
+
+        // Fonction pour centrer le diagramme
+        function centerDiagram() {
+            const outerWrapper = document.getElementById('mermaidOuterWrapper');
+            const innerWrapper = document.getElementById('mermaidInnerWrapper');
+            
+            if (outerWrapper && innerWrapper) {
+                // Calculer le décalage pour centrer
+                const outerRect = outerWrapper.getBoundingClientRect();
+                const innerRect = innerWrapper.getBoundingClientRect();
+                
+                // Centrer horizontalement et verticalement
+                const scrollLeft = (innerRect.width * currentScale - outerRect.width) / 2;
+                const scrollTop = (innerRect.height * currentScale - outerRect.height) / 2;
+                
+                outerWrapper.scrollLeft = Math.max(0, scrollLeft);
+                outerWrapper.scrollTop = Math.max(0, scrollTop);
+                
+                showStatus('Diagramme centré');
+            }
+        }
+
+        // Fonctions de zoom améliorées
+        function zoomIn() {
+            if (currentScale < maxScale) {
+                const oldScale = currentScale;
+                currentScale = Math.min(maxScale, currentScale + scaleStep);
+                applyZoom();
+                updateZoomUI();
+                adjustScrollPosition(oldScale, currentScale);
+                showStatus(`Zoom: ${Math.round(currentScale * 100)}%`);
+            }
+        }
+        
+        function zoomOut() {
+            if (currentScale > minScale) {
+                const oldScale = currentScale;
+                currentScale = Math.max(minScale, currentScale - scaleStep);
+                applyZoom();
+                updateZoomUI();
+                adjustScrollPosition(oldScale, currentScale);
+                showStatus(`Zoom: ${Math.round(currentScale * 100)}%`);
+            }
+        }
+        
+        function resetZoom() {
+            const oldScale = currentScale;
+            currentScale = 1;
+            applyZoom();
+            updateZoomUI();
+            adjustScrollPosition(oldScale, currentScale);
+            centerDiagram();
+            showStatus('Zoom réinitialisé à 100%');
+        }
+        
+        function zoomToMax() {
+            const oldScale = currentScale;
+            currentScale = maxScale;
+            applyZoom();
+            updateZoomUI();
+            adjustScrollPosition(oldScale, currentScale);
+            showStatus('Zoom maximum: 1000%');
+        }
+        
+        function setZoom(scale) {
+            const oldScale = currentScale;
+            currentScale = scale;
+            applyZoom();
+            updateZoomUI();
+            adjustScrollPosition(oldScale, currentScale);
+            showStatus(`Zoom défini à: ${Math.round(currentScale * 100)}%`);
+        }
+        
+        function updateZoomFromSlider(value) {
+            const oldScale = currentScale;
+            currentScale = value / 100;
+            applyZoom();
+            updateZoomDisplay();
+            updateZoomButtons();
+            adjustScrollPosition(oldScale, currentScale);
+        }
+        
+        function applyZoom() {
+            const innerWrapper = document.getElementById('mermaidInnerWrapper');
+            if (innerWrapper) {
+                innerWrapper.style.transform = `scale(${currentScale})`;
+            }
+        }
+        
+        // Ajuster la position de défilement lors du zoom
+        function adjustScrollPosition(oldScale, newScale) {
+            const outerWrapper = document.getElementById('mermaidOuterWrapper');
+            if (outerWrapper) {
+                const scaleRatio = newScale / oldScale;
+                const centerX = outerWrapper.scrollLeft + outerWrapper.clientWidth / 2;
+                const centerY = outerWrapper.scrollTop + outerWrapper.clientHeight / 2;
+                
+                outerWrapper.scrollLeft = centerX * scaleRatio - outerWrapper.clientWidth / 2;
+                outerWrapper.scrollTop = centerY * scaleRatio - outerWrapper.clientHeight / 2;
+            }
+        }
+        
+        function updateZoomUI() {
+            updateZoomDisplay();
+            updateZoomSlider();
+            updateZoomButtons();
+            updateScrollHint();
+        }
+        
+        function updateZoomDisplay() {
+            const zoomPercentage = document.getElementById('zoomPercentage');
+            if (zoomPercentage) {
+                zoomPercentage.textContent = `${Math.round(currentScale * 100)}%`;
+                if (currentScale >= 5) {
+                    zoomPercentage.style.color = '#ff6b6b';
+                } else if (currentScale >= 2) {
+                    zoomPercentage.style.color = '#ffa726';
+                } else {
+                    zoomPercentage.style.color = '#3498db';
+                }
+            }
+        }
+        
+        function updateZoomSlider() {
+            const zoomSlider = document.getElementById('zoomSlider');
+            if (zoomSlider) {
+                zoomSlider.value = currentScale * 100;
+            }
+        }
+        
+        function updateZoomButtons() {
+            const zoomInBtn = document.getElementById('zoomInBtn');
+            const zoomOutBtn = document.getElementById('zoomOutBtn');
+            
+            if (zoomInBtn) {
+                zoomInBtn.disabled = currentScale >= maxScale;
+                zoomInBtn.title = currentScale >= maxScale ? 'Zoom maximum atteint (1000%)' : 'Zoom avant';
+            }
+            
+            if (zoomOutBtn) {
+                zoomOutBtn.disabled = currentScale <= minScale;
+                zoomOutBtn.title = currentScale <= minScale ? 'Zoom minimum atteint (50%)' : 'Zoom arrière';
+            }
+        }
+        
+        function updateScrollHint() {
+            const scrollHint = document.getElementById('scrollHint');
+            if (scrollHint) {
+                if (currentScale > 1.5) {
+                    scrollHint.style.display = 'block';
+                } else {
+                    scrollHint.style.display = 'none';
+                }
+            }
+        }
+        
+        function showStatus(message, type = 'info') {
+            const statusElement = document.getElementById('statusMessage');
+            if (statusElement) {
+                statusElement.textContent = message;
+                statusElement.style.background = type === 'error' ? 'rgba(255, 0, 0, 0.2)' : 
+                                               type === 'success' ? 'rgba(0, 255, 0, 0.2)' : 
+                                               'rgba(255, 255, 255, 0.1)';
+                statusElement.style.color = type === 'error' ? '#ff6b6b' : 
+                                          type === 'success' ? '#69db7c' : 'white';
+                
+                setTimeout(() => {
+                    if (statusElement.textContent === message) {
+                        statusElement.textContent = '';
+                        statusElement.style.background = '';
+                    }
+                }, 3000);
+            }
+        }
+        
+        function downloadDiagram() {
+            const svgElement = document.querySelector('#mermaid-diagram svg');
+            if (svgElement) {
+                try {
+                    showStatus('Génération du fichier PNG...');
+                    
+                    const clonedSvg = svgElement.cloneNode(true);
+                    clonedSvg.style.transform = '';
+                    
+                    const svgData = new XMLSerializer().serializeToString(clonedSvg);
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const img = new Image();
+                    
+                    img.onload = function() {
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0);
+                        
+                        const pngFile = canvas.toDataURL('image/png');
+                        const downloadLink = document.createElement('a');
+                        downloadLink.download = 'difficultes-solutions.png';
+                        downloadLink.href = pngFile;
+                        downloadLink.click();
+                        
+                        showStatus('Diagramme téléchargé avec succès!', 'success');
+                    };
+                    
+                    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+                } catch (error) {
+                    console.error('Erreur lors du téléchargement:', error);
+                    showStatus('Erreur lors du téléchargement', 'error');
+                }
+            } else {
+                showStatus('Le diagramme n\'est pas encore chargé', 'error');
+            }
+        }
+
+        // Navigation au clavier
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey) {
+                switch(event.key) {
+                    case '+':
+                    case '=':
+                        event.preventDefault();
+                        zoomIn();
+                        break;
+                    case '-':
+                        event.preventDefault();
+                        zoomOut();
+                        break;
+                    case '0':
+                        event.preventDefault();
+                        resetZoom();
+                        break;
+                    case '9':
+                        event.preventDefault();
+                        zoomToMax();
+                        break;
+                    case 'c':
+                        event.preventDefault();
+                        centerDiagram();
+                        break;
+                }
+            }
+        });
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            renderDiagram();
+            updateZoomUI();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Écosystème Technologique Maîtrisé</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a237e, #283593, #303f9f);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 15px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 15px 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            min-width: 150px;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .chart-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .mermaid-outer-wrapper {
+            width: 100%;
+            height: 700px;
+            overflow: auto;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .mermaid-inner-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-width: min-content;
+            min-height: min-content;
+            padding: 40px;
+            transform-origin: center center;
+            transition: transform 0.3s ease;
+        }
+        
+        .mermaid {
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .mermaid svg {
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        
+        .legend-text {
+            font-size: 0.9rem;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .control-btn:active {
+            transform: translateY(0);
+        }
+        
+        .control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .zoom-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .zoom-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+        
+        .zoom-level {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .zoom-percentage {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #7986cb;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .zoom-slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: 25px;
+            margin-top: 10px;
+        }
+        
+        .zoom-slider {
+            width: 300px;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .zoom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #7986cb;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+        
+        .zoom-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #7986cb;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+        
+        .zoom-presets {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .preset-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .preset-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .status-message {
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .scroll-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            z-index: 10;
+        }
+        
+        .tech-description {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .tech-description h3 {
+            margin-bottom: 15px;
+            color: #c5cae9;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 8px;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .tech-category {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .tech-category h4 {
+            color: #7986cb;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .tech-list {
+            list-style-type: none;
+        }
+        
+        .tech-item {
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tech-item:last-child {
+            border-bottom: none;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .stat-card {
+                width: 80%;
+            }
+            
+            .chart-container {
+                padding: 15px;
+            }
+            
+            .mermaid-outer-wrapper {
+                height: 500px;
+            }
+            
+            .mermaid-inner-wrapper {
+                padding: 20px;
+            }
+            
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .zoom-slider {
+                width: 200px;
+            }
+            
+            .zoom-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Écosystème Technologique Maîtrisé</h1>
+            <p class="subtitle">Architecture complète des technologies utilisées dans le projet</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">Couches</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">15</div>
+                    <div class="stat-label">Technologies</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">Intégrations</div>
+                </div>
+            </div>
+            
+            <div class="zoom-controls">
+                <div class="controls">
+                    <button class="control-btn" onclick="zoomIn()" id="zoomInBtn">Zoom +</button>
+                    <button class="control-btn" onclick="zoomOut()" id="zoomOutBtn">Zoom -</button>
+                    <button class="control-btn" onclick="resetZoom()">100%</button>
+                    <button class="control-btn" onclick="zoomToMax()">1000%</button>
+                    <button class="control-btn" onclick="downloadDiagram()">Télécharger</button>
+                    <button class="control-btn" onclick="centerDiagram()">Centrer</button>
+                </div>
+                
+                <div class="zoom-info">
+                    <div class="zoom-level">Niveau de zoom:</div>
+                    <div class="zoom-percentage" id="zoomPercentage">100%</div>
+                </div>
+                
+                <div class="zoom-slider-container">
+                    <span>50%</span>
+                    <input type="range" min="50" max="1000" value="100" class="zoom-slider" id="zoomSlider" oninput="updateZoomFromSlider(this.value)">
+                    <span>1000%</span>
+                </div>
+                
+                <div class="zoom-presets">
+                    <button class="preset-btn" onclick="setZoom(0.5)">50%</button>
+                    <button class="preset-btn" onclick="setZoom(1)">100%</button>
+                    <button class="preset-btn" onclick="setZoom(2)">200%</button>
+                    <button class="preset-btn" onclick="setZoom(5)">500%</button>
+                    <button class="preset-btn" onclick="setZoom(10)">1000%</button>
+                </div>
+                
+                <div class="status-message" id="statusMessage"></div>
+            </div>
+        </header>
+        
+        <div class="chart-container">
+            <div class="mermaid-outer-wrapper" id="mermaidOuterWrapper">
+                <div class="mermaid-inner-wrapper" id="mermaidInnerWrapper">
+                    <div class="mermaid" id="mermaid-diagram"></div>
+                </div>
+                <div class="scroll-hint" id="scrollHint">Utilisez le défilement pour naviguer</div>
+            </div>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #1a237e;"></div>
+                    <div class="legend-text">Architecture Principale</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #3949ab;"></div>
+                    <div class="legend-text">Couche Présentation</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #5c6bc0;"></div>
+                    <div class="legend-text">Couche Logique Métier</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #7986cb;"></div>
+                    <div class="legend-text">Couche Données</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #9fa8da;"></div>
+                    <div class="legend-text">Couche Infrastructure</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tech-description">
+            <h3>Description des Technologies</h3>
+            <div class="tech-grid">
+                <div class="tech-category">
+                    <h4>🎨 Couche Présentation</h4>
+                    <ul class="tech-list">
+                        <li class="tech-item"><strong>Tkinter:</strong> Interface utilisateur desktop native</li>
+                        <li class="tech-item"><strong>Folium:</strong> Cartes interactives et visualisations géospatiales</li>
+                        <li class="tech-item"><strong>python-docx:</strong> Génération automatique de documents Word</li>
+                        <li class="tech-item"><strong>openpyxl:</strong> Création et manipulation de fichiers Excel</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-category">
+                    <h4>⚙️ Couche Logique Métier</h4>
+                    <ul class="tech-list">
+                        <li class="tech-item"><strong>Python:</strong> Langage de programmation principal</li>
+                        <li class="tech-item"><strong>Selenium:</strong> Automatisation des navigateurs web</li>
+                        <li class="tech-item"><strong>BeautifulSoup:</strong> Analyse et parsing HTML/XML</li>
+                        <li class="tech-item"><strong>Requests:</strong> Requêtes HTTP et APIs REST</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-category">
+                    <h4>💾 Couche Données</h4>
+                    <ul class="tech-list">
+                        <li class="tech-item"><strong>SQLite:</strong> Base de données relationnelle légère</li>
+                        <li class="tech-item"><strong>XML:</strong> Échange et stockage structuré de données</li>
+                        <li class="tech-item"><strong>JSON:</strong> Configuration et données légères</li>
+                        <li class="tech-item"><strong>CSV:</strong> Export/import de données tabulaires</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-category">
+                    <h4>🛠️ Couche Infrastructure</h4>
+                    <ul class="tech-list">
+                        <li class="tech-item"><strong>Git & GitHub:</strong> Gestion de versions et collaboration</li>
+                        <li class="tech-item"><strong>VS Code:</strong> Environnement de développement</li>
+                        <li class="tech-item"><strong>Trello:</strong> Gestion de projet agile</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables pour le contrôle du zoom
+        let currentScale = 1;
+        const minScale = 0.5;   // 50%
+        const maxScale = 10;    // 1000%
+        const scaleStep = 0.1;  // 10%
+        
+        // Configuration Mermaid
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark',
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            securityLevel: 'loose'
+        });
+        
+        // Définition du diagramme
+        const diagramDefinition = `
+flowchart TD
+    A[Écosystème Technologique Maîtrisé]
+    
+    A --> B[Couche Présentation]
+    A --> C[Couche Logique Métier]
+    A --> D[Couche Données]
+    A --> E[Couche Infrastructure]
+    
+    B --> B1[Tkinter<br/>Interface Desktop]
+    B --> B2[Folium<br/>Cartographie Interactive]
+    B --> B3[Export Word<br/>python-docx]
+    B --> B4[Export Excel<br/>openpyxl]
+    
+    C --> C1[Python<br/>Langage Principal]
+    C --> C2[Selenium<br/>Automatisation Web]
+    C --> C3[BeautifulSoup<br/>Parsing HTML/XML]
+    C --> C4[Requests<br/>Client HTTP]
+    
+    D --> D1[SQLite<br/>Base données]
+    D --> D2[XML<br/>Échange de données]
+    D --> D3[JSON<br/>Configuration]
+    D --> D4[CSV<br/>Export simple]
+    
+    E --> E1[Git & GitHub<br/>Versioning]
+    E --> E2[VS Code<br/>Environnement]
+    E --> E3[Trello<br/>Gestion projet]
+    
+    B1 -.-> C1
+    B3 -.-> C1
+    B4 -.-> C1
+    C2 -.-> D1
+    C3 -.-> D2
+    C4 -.-> D3
+    D4 -.-> E1
+    
+    style A fill:#1a237e,color:#ffffff,stroke-width:3px
+    style B fill:#3949ab,color:#ffffff,stroke-width:2px
+    style C fill:#5c6bc0,color:#ffffff,stroke-width:2px
+    style D fill:#7986cb,color:#000000,stroke-width:2px
+    style E fill:#9fa8da,color:#000000,stroke-width:2px
+    style B1 fill:#3949ab,color:#ffffff
+    style B2 fill:#3949ab,color:#ffffff
+    style B3 fill:#3949ab,color:#ffffff
+    style B4 fill:#3949ab,color:#ffffff
+    style C1 fill:#5c6bc0,color:#ffffff
+    style C2 fill:#5c6bc0,color:#ffffff
+    style C3 fill:#5c6bc0,color:#ffffff
+    style C4 fill:#5c6bc0,color:#ffffff
+    style D1 fill:#7986cb,color:#000000
+    style D2 fill:#7986cb,color:#000000
+    style D3 fill:#7986cb,color:#000000
+    style D4 fill:#7986cb,color:#000000
+    style E1 fill:#9fa8da,color:#000000
+    style E2 fill:#9fa8da,color:#000000
+    style E3 fill:#9fa8da,color:#000000
+`;
+
+        // Fonction pour rendre le diagramme
+        async function renderDiagram() {
+            const container = document.getElementById('mermaid-diagram');
+            
+            try {
+                const mermaidDiv = document.createElement('div');
+                mermaidDiv.className = 'mermaid';
+                mermaidDiv.textContent = diagramDefinition;
+                
+                container.innerHTML = '';
+                container.appendChild(mermaidDiv);
+                
+                await mermaid.init(undefined, mermaidDiv);
+                
+                console.log('Diagramme Mermaid rendu avec succès');
+                showStatus('Écosystème technologique chargé avec succès!', 'success');
+                
+                // Centrer le diagramme après le chargement
+                setTimeout(centerDiagram, 100);
+                
+            } catch (error) {
+                console.error('Erreur lors du rendu Mermaid:', error);
+                container.innerHTML = '<div class="status-message">Erreur lors du chargement du diagramme</div>';
+                showStatus('Erreur lors du chargement du diagramme', 'error');
+            }
+        }
+
+        // Fonction pour centrer le diagramme
+        function centerDiagram() {
+            const outerWrapper = document.getElementById('mermaidOuterWrapper');
+            const innerWrapper = document.getElementById('mermaidInnerWrapper');
+            
+            if (outerWrapper && innerWrapper) {
+                // Calculer le décalage pour centrer
+                const outerRect = outerWrapper.getBoundingClientRect();
+                const innerRect = innerWrapper.getBoundingClientRect();
+                
+                // Centrer horizontalement et verticalement
+                const scrollLeft = (innerRect.width * currentScale - outerRect.width) / 2;
+                const scrollTop = (innerRect.height * currentScale - outerRect.height) / 2;
+                
+                outerWrapper.scrollLeft = Math.max(0, scrollLeft);
+                outerWrapper.scrollTop = Math.max(0, scrollTop);
+                
+                showStatus('Diagramme centré');
+            }
+        }
+
+        // Fonctions de zoom améliorées
+        function zoomIn() {
+            if (currentScale < maxScale) {
+                const oldScale = currentScale;
+                currentScale = Math.min(maxScale, currentScale + scaleStep);
+                applyZoom();
+                updateZoomUI();
+                adjustScrollPosition(oldScale, currentScale);
+                showStatus(`Zoom: ${Math.round(currentScale * 100)}%`);
+            }
+        }
+        
+        function zoomOut() {
+            if (currentScale > minScale) {
+                const oldScale = currentScale;
+                currentScale = Math.max(minScale, currentScale - scaleStep);
+                applyZoom();
+                updateZoomUI();
+                adjustScrollPosition(oldScale, currentScale);
+                showStatus(`Zoom: ${Math.round(currentScale * 100)}%`);
+            }
+        }
+        
+        function resetZoom() {
+            const oldScale = currentScale;
+            currentScale = 1;
+            applyZoom();
+            updateZoomUI();
+            adjustScrollPosition(oldScale, currentScale);
+            centerDiagram();
+            showStatus('Zoom réinitialisé à 100%');
+        }
+        
+        function zoomToMax() {
+            const oldScale = currentScale;
+            currentScale = maxScale;
+            applyZoom();
+            updateZoomUI();
+            adjustScrollPosition(oldScale, currentScale);
+            showStatus('Zoom maximum: 1000%');
+        }
+        
+        function setZoom(scale) {
+            const oldScale = currentScale;
+            currentScale = scale;
+            applyZoom();
+            updateZoomUI();
+            adjustScrollPosition(oldScale, currentScale);
+            showStatus(`Zoom défini à: ${Math.round(currentScale * 100)}%`);
+        }
+        
+        function updateZoomFromSlider(value) {
+            const oldScale = currentScale;
+            currentScale = value / 100;
+            applyZoom();
+            updateZoomDisplay();
+            updateZoomButtons();
+            adjustScrollPosition(oldScale, currentScale);
+        }
+        
+        function applyZoom() {
+            const innerWrapper = document.getElementById('mermaidInnerWrapper');
+            if (innerWrapper) {
+                innerWrapper.style.transform = `scale(${currentScale})`;
+            }
+        }
+        
+        // Ajuster la position de défilement lors du zoom
+        function adjustScrollPosition(oldScale, newScale) {
+            const outerWrapper = document.getElementById('mermaidOuterWrapper');
+            if (outerWrapper) {
+                const scaleRatio = newScale / oldScale;
+                const centerX = outerWrapper.scrollLeft + outerWrapper.clientWidth / 2;
+                const centerY = outerWrapper.scrollTop + outerWrapper.clientHeight / 2;
+                
+                outerWrapper.scrollLeft = centerX * scaleRatio - outerWrapper.clientWidth / 2;
+                outerWrapper.scrollTop = centerY * scaleRatio - outerWrapper.clientHeight / 2;
+            }
+        }
+        
+        function updateZoomUI() {
+            updateZoomDisplay();
+            updateZoomSlider();
+            updateZoomButtons();
+            updateScrollHint();
+        }
+        
+        function updateZoomDisplay() {
+            const zoomPercentage = document.getElementById('zoomPercentage');
+            if (zoomPercentage) {
+                zoomPercentage.textContent = `${Math.round(currentScale * 100)}%`;
+                if (currentScale >= 5) {
+                    zoomPercentage.style.color = '#ff6b6b';
+                } else if (currentScale >= 2) {
+                    zoomPercentage.style.color = '#ffa726';
+                } else {
+                    zoomPercentage.style.color = '#7986cb';
+                }
+            }
+        }
+        
+        function updateZoomSlider() {
+            const zoomSlider = document.getElementById('zoomSlider');
+            if (zoomSlider) {
+                zoomSlider.value = currentScale * 100;
+            }
+        }
+        
+        function updateZoomButtons() {
+            const zoomInBtn = document.getElementById('zoomInBtn');
+            const zoomOutBtn = document.getElementById('zoomOutBtn');
+            
+            if (zoomInBtn) {
+                zoomInBtn.disabled = currentScale >= maxScale;
+                zoomInBtn.title = currentScale >= maxScale ? 'Zoom maximum atteint (1000%)' : 'Zoom avant';
+            }
+            
+            if (zoomOutBtn) {
+                zoomOutBtn.disabled = currentScale <= minScale;
+                zoomOutBtn.title = currentScale <= minScale ? 'Zoom minimum atteint (50%)' : 'Zoom arrière';
+            }
+        }
+        
+        function updateScrollHint() {
+            const scrollHint = document.getElementById('scrollHint');
+            if (scrollHint) {
+                if (currentScale > 1.5) {
+                    scrollHint.style.display = 'block';
+                } else {
+                    scrollHint.style.display = 'none';
+                }
+            }
+        }
+        
+        function showStatus(message, type = 'info') {
+            const statusElement = document.getElementById('statusMessage');
+            if (statusElement) {
+                statusElement.textContent = message;
+                statusElement.style.background = type === 'error' ? 'rgba(255, 0, 0, 0.2)' : 
+                                               type === 'success' ? 'rgba(0, 255, 0, 0.2)' : 
+                                               'rgba(255, 255, 255, 0.1)';
+                statusElement.style.color = type === 'error' ? '#ff6b6b' : 
+                                          type === 'success' ? '#69db7c' : 'white';
+                
+                setTimeout(() => {
+                    if (statusElement.textContent === message) {
+                        statusElement.textContent = '';
+                        statusElement.style.background = '';
+                    }
+                }, 3000);
+            }
+        }
+        
+        function downloadDiagram() {
+            const svgElement = document.querySelector('#mermaid-diagram svg');
+            if (svgElement) {
+                try {
+                    showStatus('Génération du fichier PNG...');
+                    
+                    const clonedSvg = svgElement.cloneNode(true);
+                    clonedSvg.style.transform = '';
+                    
+                    const svgData = new XMLSerializer().serializeToString(clonedSvg);
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const img = new Image();
+                    
+                    img.onload = function() {
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0);
+                        
+                        const pngFile = canvas.toDataURL('image/png');
+                        const downloadLink = document.createElement('a');
+                        downloadLink.download = 'ecosysteme-technologique.png';
+                        downloadLink.href = pngFile;
+                        downloadLink.click();
+                        
+                        showStatus('Diagramme téléchargé avec succès!', 'success');
+                    };
+                    
+                    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+                } catch (error) {
+                    console.error('Erreur lors du téléchargement:', error);
+                    showStatus('Erreur lors du téléchargement', 'error');
+                }
+            } else {
+                showStatus('Le diagramme n\'est pas encore chargé', 'error');
+            }
+        }
+
+        // Navigation au clavier
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey) {
+                switch(event.key) {
+                    case '+':
+                    case '=':
+                        event.preventDefault();
+                        zoomIn();
+                        break;
+                    case '-':
+                        event.preventDefault();
+                        zoomOut();
+                        break;
+                    case '0':
+                        event.preventDefault();
+                        resetZoom();
+                        break;
+                    case '9':
+                        event.preventDefault();
+                        zoomToMax();
+                        break;
+                    case 'c':
+                        event.preventDefault();
+                        centerDiagram();
+                        break;
+                }
+            }
+        });
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            renderDiagram();
+            updateZoomUI();
+        });
+    </script>
+</body>
+</html>
