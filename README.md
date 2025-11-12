@@ -5,7 +5,9 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen.svg)]()
 
+
 [Écosystème technologique maîtrisé](https://krikounoureddine.github.io/Scraper-Tri/presentation/Ecosysteme_Technologique_Maitris.html)
+
 
 > Application desktop intelligente pour l'automatisation de la collecte et la gestion des données des centres de tri du BTP depuis la Fédération Française du Bâtiment.
 
@@ -29,6 +31,7 @@
 [Difficultés rencontrées et solutions apportées](https://krikounoureddine.github.io/Scraper-Tri/presentation/Diagramme_difficultes_solutions.html)
 
 [ Analyse comparative des performances ](https://krikounoureddine.github.io/Scraper-Tri/presentation/Manual_vs_Automated_Scraping.html)
+
 
 | Avant Scraper Tri | Après Scraper Tri |
 |-------------------|-------------------|
