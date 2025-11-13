@@ -30,7 +30,7 @@
 
 [Difficultés rencontrées et solutions apportées](https://krikounoureddine.github.io/Scraper-Tri/presentation/Diagramme_difficultes_solutions.html)
 
-[ Analyse comparative des performances ](https://krikounoureddine.github.io/Scraper-Tri/presentation/Manual_vs_Automated_Scraping.html)
+[Analyse comparative des performances ](https://krikounoureddine.github.io/Scraper-Tri/presentation/Manual_vs_Automated_Scraping.html)
 
 
 | Avant Scraper Tri | Après Scraper Tri |
@@ -41,6 +41,10 @@
 | 🌐 Couverture limitée | 🗺️ France entière |
 
 ## 🚀 Fonctionnalités
+
+[Diagramme de Flux Complet de l'Application Scraper Tri ](https://krikounoureddine.github.io/Scraper-Tri/presentation/Diagramme_de_flux_complet.html)
+
+[Arbre de décision des types de déchets](https://krikounoureddine.github.io/Scraper-Tri/presentation/Types_Dechets.html)
 
 ### 🔍 Recherche Intelligente
 - **3 modes de recherche** : Simple, Multi-catégories, Avancée
@@ -70,3 +74,6 @@ exports = {
     "json": "API/Web (.json)",
     "carte": "Visualisation géographique (.html)"
 }
+'''
+
+[ Matrice des compétences développées](https://krikounoureddine.github.io/Scraper-Tri/presentation/Matrice_des_Competences_Developpees.html)
