@@ -42,6 +42,8 @@
 
 ## 🚀 Fonctionnalités
 
+🔧 Diagramme d'Architecture
+
 [Diagramme de Flux Complet de l'Application Scraper Tri ](https://krikounoureddine.github.io/Scraper-Tri/presentation/Diagramme_de_flux_complet.html)
 
 [Arbre de décision des types de déchets](https://krikounoureddine.github.io/Scraper-Tri/presentation/Types_Dechets.html)
@@ -77,3 +79,25 @@ exports = {
 '''
 
 [ Matrice des compétences développées](https://krikounoureddine.github.io/Scraper-Tri/presentation/Matrice_des_Competences_Developpees.html)
+
+
+
+🎨 Interface Utilisateur
+Framework : Tkinter moderne et responsive
+
+Expérience utilisateur : Animations fluides, feedback visuel
+
+Accessibilité : Interface intuitive, documentation intégrée
+
+Personnalisation : Thèmes et préférences utilisateur
+
+🛠️ Installation
+Prérequis
+Python 3.11 ou supérieur
+
+Navigateur Chrome/Firefox
+
+500 Mo d'espace disque libre
+
+💻 Utilisation
+🎯 Démarrage Rapide
