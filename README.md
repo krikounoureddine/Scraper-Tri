@@ -83,9 +83,13 @@ exports = {
 
 🎨 Interface Utilisateur
 
-interface principal (https://krikounoureddine.github.io/Scraper-Tri/presentation/screenshot_main.png)
+interface principal 
 
-interface recherche (https://krikounoureddine.github.io/Scraper-Tri/presentation/screenshot_recherche.png)
+<img src="presentation/screenshot_main.png" width="150">
+
+interface recherche
+
+<img src="presentation/screenshot_recherche.png" width="150">
 
 🛠️ Installation
 telecharger le fichier exécutable et utilisez directe "Selenium_Complet.exe"
