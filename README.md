@@ -8,6 +8,7 @@
 
 [Écosystème technologique maîtrisé](https://krikounoureddine.github.io/Scraper-Tri/presentation/Ecosysteme_Technologique_Maitris.html)
 
+[Affiche](https://krikounoureddine.github.io/Scraper-Tri/presentation/afiche.md)
 
 > Application desktop intelligente pour l'automatisation de la collecte et la gestion des données des centres de tri du BTP depuis la Fédération Française du Bâtiment.
 
