@@ -6,22 +6,21 @@
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen.svg)]()
 [![Documentation](https://img.shields.io/badge/Docs-Available-blue.svg)](https://krikounoureddine.github.io/Scraper-Tri/presentation/Rapport_Du_Projet.pdf)
 
-- fichier de rapport du projet à telecharger "https://krikounoureddine.github.io/Scraper-Tri/presentation/Rapport_Du_Projet.pdf"
 
-
-
-> Application desktop intelligente pour l'automatisation de la collecte et la gestion des données des centres de tri du BTP depuis la Fédération Française du Bâtiment.
+> 🧠 Application desktop intelligente pour l'automatisation de la collecte et la gestion des données des centres de tri du BTP depuis la Fédération Française du Bâtiment.
 
 ## 📋 Table des Matières
 
 - [🎯 Aperçu](#-aperçu)
 - [🚀 Fonctionnalités](#-fonctionnalités)
+- [🧩 Technologies Utilisées](#-technologies-utilisées)
+- [🏗️ Architecture](#-architecture)
+- [📊 Résultats](#-résultats)
 - [🛠️ Installation](#️-installation)
 - [💻 Utilisation](#-utilisation)
-- [🏗️ Architecture](#️-architecture)
-- [📊 Résultats](#-résultats)
-- [🤝 Contribution](#-contribution)
-- [📄 Licence](#-licence)
+- [👥 Auteurs et Encadrement](#-auteurs-et-encadrement)
+- [🙏 Remerciements](#-remerciements)
+- [📫 Contact](#-contact)
 
 ## 🎯 Aperçu
 
@@ -29,14 +28,30 @@
 
 ### 📈 Problématique Résolue
 
-[Difficultés rencontrées et solutions apportées](https://krikounoureddine.github.io/Scraper-Tri/presentation/Diagramme_difficultes_solutions.html)
+- [Difficultés rencontrées et solutions apportées](https://krikounoureddine.github.io/Scraper-Tri/presentation/Diagramme_difficultes_solutions.html)
 
-[Arbre de décision des types de déchets](https://krikounoureddine.github.io/Scraper-Tri/presentation/Types_Dechets.html)
-
-
+- [Arbre de décision des types de déchets](https://krikounoureddine.github.io/Scraper-Tri/presentation/Types_Dechets.html)
 
 
-📊 Résultats
+### 🎨 Interface Utilisateur
+
+interface principal 
+
+<img src="presentation/screenshot_main.png" width="150">
+
+interface recherche
+
+<img src="presentation/screenshot_recherche.png" width="150">
+
+## 🧩 Technologies Utilisées
+
+- [Écosystème technologique maîtrisé](https://krikounoureddine.github.io/Scraper-Tri/presentation/Ecosysteme_Technologique_Maitris.html)
+
+## 🏗️ Architecture
+
+- [Diagramme de Flux Complet de l'Application Scraper Tri ](https://krikounoureddine.github.io/Scraper-Tri/presentation/Diagramme_de_flux_complet.html)
+
+## 📊 Résultats
 
 [Analyse comparative des performances ](https://krikounoureddine.github.io/Scraper-Tri/presentation/Manual_vs_Automated_Scraping.html)
 
@@ -47,9 +62,50 @@
 | 🗂️ 1 format manuel | 📤 5 formats automatisés |
 | 🌐 Couverture limitée | 🗺️ France entière |
 
-## 🚀 Fonctionnalités
+[ Matrice des compétences développées](https://krikounoureddine.github.io/Scraper-Tri/presentation/Matrice_des_Competences_Developpees.html)
 
-[Diagramme de Flux Complet de l'Application Scraper Tri ](https://krikounoureddine.github.io/Scraper-Tri/presentation/Diagramme_de_flux_complet.html)
+## 🛠️ Installation
+
+### Prérequis
+- 🐍 Python **3.11+**
+- 🌐 Navigateur **Chrome** ou **Firefox**
+- 💾 Au moins **500 Mo d’espace libre**
+
+### Étapes
+1. Téléchargez l’exécutable :  
+   👉 [Selenium_Complet.exe](https://drive.google.com/file/d/1mH7IKtoTBw7Zf5FXtVDLgNtESUOTQg67/view?usp=drive_link)
+2. Lancez-le directement (aucune installation requise).
+3. Suivez les instructions du [Guide d’utilisation (PDF)](https://krikounoureddine.github.io/Scraper-Tri/presentation/Guide_Utilisation.pdf)
+
+## 💻 Utilisation
+
+- [Vidéo Démonstration pour la recherche 1](https://drive.google.com/file/d/1esJ-2XCAtanW2xPRC3Am0B8fDHZ6gi6E/view?usp=drive_link)
+
+- [Vidéo Démonstration pour la recherche 2](https://drive.google.com/file/d/1OtsWXWpxkqf0DvQ35szTjs_TA_FKltsU/view?usp=drive_link)
+
+## 👥 Auteurs
+
+Noureddine KRIKOU - Développement initial - GitHub Profile
+
+Encadrement :
+        - M. Nasreddine BOUHAÏ - Université Paris VIII
+        - M. Moussa SISSOKO - SISCO
+
+## 🙏 Remerciements
+
+- Équipe SISCO pour son accompagnement
+- Université Paris VIII pour le cadre académique
+- FFB pour la mise à disposition des données
+
+## 📫 Contact
+
+👤 **Noureddine KRIKOU**  
+📧 [noureddine.krikou@example.com](mailto:noureddine.krikou@example.com)  
+💼 [GitHub - KrikouNoureddine](https://github.com/KrikouNoureddine)  
+🏫 Université Paris VIII — Stage chez **SISCO**
+
+
+## 🚀 Fonctionnalités
 
 ### 🔍 Recherche Intelligente
 - **3 modes de recherche** : Simple, Multi-catégories, Avancée
@@ -79,61 +135,3 @@ exports = {
     "json": "API/Web (.json)",
     "carte": "Visualisation géographique (.html)"
 }
-
-[ Matrice des compétences développées](https://krikounoureddine.github.io/Scraper-Tri/presentation/Matrice_des_Competences_Developpees.html)
-
-🎨 Interface Utilisateur
-
-interface principal 
-
-<img src="presentation/screenshot_main.png" width="150">
-
-interface recherche
-
-<img src="presentation/screenshot_recherche.png" width="150">
-
-## 🛠️ Installation
-
-### Prérequis
-- 🐍 Python **3.11+**
-- 🌐 Navigateur **Chrome** ou **Firefox**
-- 💾 Au moins **500 Mo d’espace libre**
-
-### Étapes
-1. Téléchargez l’exécutable :  
-   👉 [Selenium_Complet.exe](https://drive.google.com/file/d/1mH7IKtoTBw7Zf5FXtVDLgNtESUOTQg67/view?usp=drive_link)
-2. Lancez-le directement (aucune installation requise).
-3. Suivez les instructions du [Guide d’utilisation (PDF)](https://krikounoureddine.github.io/Scraper-Tri/presentation/Guide_Utilisation.pdf)
-
-voisez les deux videox de démonstration
-Vidéo Démonstration pour la recherche 1 (https://drive.google.com/file/d/1esJ-2XCAtanW2xPRC3Am0B8fDHZ6gi6E/view?usp=drive_link)
-Vidéo Démonstration pour la recherche 2 (https://drive.google.com/file/d/1OtsWXWpxkqf0DvQ35szTjs_TA_FKltsU/view?usp=drive_link)
-
-## 🧩 Technologies Utilisées
-
-[Écosystème technologique maîtrisé](https://krikounoureddine.github.io/Scraper-Tri/presentation/Ecosysteme_Technologique_Maitris.html)
-
-
-👥 Auteurs
-Noureddine KRIKOU - Développement initial - GitHub Profile
-
-Encadrement :
-
-M. Nasreddine BOUHAÏ - Université Paris VIII
-
-M. Moussa SISSOKO - SISCO
-
-🙏 Remerciements
-Équipe SISCO pour son accompagnement
-
-Université Paris VIII pour le cadre académique
-
-FFB pour la mise à disposition des données
-
-## 📫 Contact
-
-👤 **Noureddine KRIKOU**  
-📧 [noureddine.krikou@example.com](mailto:noureddine.krikou@example.com)  
-💼 [GitHub - KrikouNoureddine](https://github.com/KrikouNoureddine)  
-🏫 Université Paris VIII — Stage chez **SISCO**
-
